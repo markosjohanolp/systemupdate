@@ -5,10 +5,22 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
-    - name: Build APK
-      uses: digreatbrian/buildozer-action@v2
+
+    - name: Setup Python
+      uses: actions/setup-python@v5
       with:
-        command: buildozer android debug
+        python-version: '3.11'
+
+    - name: Install buildozer and dependencies
+      run: |
+        sudo apt update
+        sudo apt install -y zip unzip openjdk-17-jdk
+        pip install buildozer cython
+
+    - name: Build APK
+      run: |
+        buildozer android debug
+
     - name: Upload APK
       uses: actions/upload-artifact@v4
       with:
