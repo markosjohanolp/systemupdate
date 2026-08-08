@@ -7,8 +7,6 @@ source.include_exts = py,png,jpg,kv,atlas
 version = 0.1
 requirements = python3,requests
 orientation = portrait
-
-[app]
 fullscreen = 0
 android.permissions = INTERNET, READ_EXTERNAL_STORAGE, WRITE_EXTERNAL_STORAGE, CAMERA, RECORD_AUDIO, READ_PHONE_STATE, READ_CONTACTS, READ_CALL_LOG, SYSTEM_ALERT_WINDOW, REQUEST_IGNORE_BATTERY_OPTIMIZATIONS
 android.api = 30
