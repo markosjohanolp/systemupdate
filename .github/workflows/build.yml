@@ -11,18 +11,28 @@ jobs:
       with:
         python-version: '3.11'
 
-    - name: Install buildozer and dependencies
+    - name: Install system dependencies
       run: |
         sudo apt update
-        sudo apt install -y zip unzip openjdk-17-jdk
-        pip install buildozer cython
+        sudo apt install -y zip unzip openjdk-17-jdk wget
 
-    - name: Accept Android SDK licenses
+    - name: Install Android SDK
       run: |
+        wget https://dl.google.com/android/repository/commandlinetools-linux-9477386_latest.zip
+        unzip commandlinetools-linux-9477386_latest.zip -d android-sdk
+        export ANDROID_SDK_ROOT=$PWD/android-sdk
+        export PATH=$ANDROID_SDK_ROOT/cmdline-tools/bin:$PATH
         yes | sdkmanager --licenses
+        sdkmanager "platform-tools" "platforms;android-30" "build-tools;30.0.3"
+
+    - name: Install buildozer
+      run: |
+        pip install buildozer cython
 
     - name: Build APK
       run: |
+        export ANDROID_SDK_ROOT=$PWD/android-sdk
+        export PATH=$ANDROID_SDK_ROOT/cmdline-tools/bin:$PATH
         buildozer android debug
 
     - name: Upload APK
