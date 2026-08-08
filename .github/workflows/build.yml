@@ -29,14 +29,15 @@ jobs:
         yes | sdkmanager --licenses
         sdkmanager "platform-tools" "platforms;android-30" "build-tools;30.0.3"
 
+    - name: Create symbolic link for buildozer
+      run: |
+        mkdir -p ~/.buildozer/android/platform/android-sdk
+        ln -sf $ANDROID_SDK_ROOT/cmdline-tools/latest ~/.buildozer/android/platform/android-sdk/tools
+        ln -sf $ANDROID_SDK_ROOT/cmdline-tools/latest/bin ~/.buildozer/android/platform/android-sdk/tools/bin
+
     - name: Install buildozer
       run: |
         pip install buildozer cython
-
-    - name: Create .buildozer directory
-      run: |
-        mkdir -p ~/.buildozer/android/platform
-        ln -sf $ANDROID_SDK_ROOT ~/.buildozer/android/platform/android-sdk
 
     - name: Build APK
       run: |
